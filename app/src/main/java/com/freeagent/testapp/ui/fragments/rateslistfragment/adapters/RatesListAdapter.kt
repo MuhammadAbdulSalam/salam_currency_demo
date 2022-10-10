@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.freeagent.testapp.api.data.CurrencyRates
 import com.freeagent.testapp.databinding.LayoutItemCurrencyRateBinding
-import com.freeagent.testapp.utils.Currency
+import java.util.*
 
 class RatesListAdapter constructor(val currencyList: List<CurrencyRates>) : RecyclerView.Adapter<RatesListAdapter.RatesListViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RatesListViewHolder {
@@ -15,8 +15,9 @@ class RatesListAdapter constructor(val currencyList: List<CurrencyRates>) : Recy
 
     override fun onBindViewHolder(holder: RatesListViewHolder, position: Int) {
         val currencyRateModel = currencyList[position]
-        holder.binding.currency = currencyRateModel.currency
-        holder.binding.tvCurrencyValue.text = "${currencyRateModel.currency.symbol} ${currencyRateModel.rate}"
+        holder.binding.tvCurrencyName.text = currencyRateModel.appCurrency.name
+        holder.binding.imgCurrencyFlag.setImageResource(currencyRateModel.appCurrency.imageResource)
+        holder.binding.tvCurrencyValue.text = "${currencyRateModel.symbol} ${currencyRateModel.rate}"
     }
 
     override fun getItemCount(): Int {

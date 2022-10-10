@@ -1,8 +1,10 @@
 package com.freeagent.testapp.api.data
 
-import com.freeagent.testapp.utils.Currency
+import com.freeagent.testapp.utils.AppCurrency
+import java.util.*
 
 data class CurrencyRates(
-    val currency: Currency,
-    val rate: String
+    val appCurrency: AppCurrency,
+    val rate: String,
+    val symbol: String = Currency.getInstance(appCurrency.name).symbol
 )

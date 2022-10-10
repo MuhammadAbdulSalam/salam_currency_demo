@@ -2,12 +2,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tool="http://schemas.android.com/tools">
-    <data>
-
-        <variable
-            name="currency"
-            type="com.freeagent.testapp.utils.Currency" />
-    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -20,7 +14,6 @@
             android:layout_height="@dimen/flag_size"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:src="@{currency.imageResource}"
             tool:src="@drawable/ic_aud"/>
 
         <TextView
@@ -29,7 +22,6 @@
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:textSize="@dimen/text_size_medium"
-            android:text="@{currency.name().toString()}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toRightOf="@id/img_currency_flag"
             app:layout_constraintBottom_toBottomOf="@id/img_currency_flag"

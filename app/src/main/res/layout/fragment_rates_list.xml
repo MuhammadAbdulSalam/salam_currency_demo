@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -14,11 +15,11 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/selected_currency_label"
+            <Spinner
+                android:id="@+id/spinner_currency"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="EUR" />
+                android:minWidth="100dp"/>
 
             <EditText
                 android:id="@+id/amount_input_field"
@@ -35,10 +36,13 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_margin="16dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout_currency_select" />
+            app:layout_constraintTop_toBottomOf="@id/layout_currency_select"
+            tools:listitem="@layout/layout_item_currency_rate"
+            tools:itemCount="5" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

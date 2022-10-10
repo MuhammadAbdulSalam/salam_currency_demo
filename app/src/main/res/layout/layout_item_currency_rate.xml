@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools">
+    <data>
+
+        <variable
+            name="currency"
+            type="com.freeagent.testapp.utils.Currency" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/img_currency_flag"
+            android:layout_width="@dimen/flag_size"
+            android:layout_height="@dimen/flag_size"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:src="@{currency.imageResource}"
+            tool:src="@drawable/ic_aud"/>
+
+        <TextView
+            android:id="@+id/tv_currency_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_size_medium"
+            android:text="@{currency.name().toString()}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/img_currency_flag"
+            app:layout_constraintBottom_toBottomOf="@id/img_currency_flag"
+            android:layout_marginStart="@dimen/margin_10"
+            tool:text="GBP"
+            />
+        <TextView
+            android:id="@+id/tv_currency_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
+            tool:text="£100.00"
+            app:layout_constraintBottom_toBottomOf="@id/img_currency_flag"
+           />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</layout>

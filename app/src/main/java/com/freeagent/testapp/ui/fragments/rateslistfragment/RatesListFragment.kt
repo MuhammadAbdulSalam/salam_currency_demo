@@ -17,12 +17,14 @@ import android.R.attr.country
 import android.util.Log
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.selection.SelectionPredicates
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StorageStrategy
 import com.freeagent.testapp.api.data.CurrencyRates
 import com.freeagent.testapp.ui.fragments.rateslistfragment.adapters.ItemsDetailsLookup
 import com.freeagent.testapp.ui.fragments.rateslistfragment.adapters.ItemsKeyProvider
+import com.freeagent.testapp.ui.helper.fragnavdatamodels.ComparisonFragArgsModel
 import com.google.android.material.snackbar.Snackbar
 
 
@@ -118,7 +120,14 @@ class RatesListFragment : Fragment() {
         override fun onSelectionChanged() {
             super.onSelectionChanged()
             binding.layoutCurrencySelect.btnHistory.visibility = if(tracker.selection.size() ==2) View.VISIBLE else View.INVISIBLE
-            binding.layoutCurrencySelect.btnHistory.setOnClickListener{ //TODO
+            binding.layoutCurrencySelect.btnHistory.setOnClickListener{
+                val fragArgs = ComparisonFragArgsModel(
+                    amount = selectedAmount,
+                    selectedCurrency = selectedCurrency,
+                    exchangeRateCurrencyOne = tracker.selection.elementAt(0),
+                    exchangeRateCurrencyTow = tracker.selection.elementAt(1)
+                )
+                findNavController().navigate(RatesListFragmentDirections.actionFragmentSplashScreenToFragmentLogin(fragArgs))
             }
         }
     }

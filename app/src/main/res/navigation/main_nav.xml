@@ -9,7 +9,23 @@
         android:id="@+id/fragment_rate_list"
         android:name="com.freeagent.testapp.ui.fragments.rateslistfragment.RatesListFragment"
         tools:layout="@layout/fragment_rates_list">
+        <action
+            android:id="@+id/action_fragment_splash_screen_to_fragment_login"
+            app:destination="@id/fragment_rate_comparison"
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_to_left"
+            app:popEnterAnim="@anim/slide_in_from_left"
+            app:popExitAnim="@anim/slide_out_to_right" />
+    </fragment>
 
+    <fragment
+        android:id="@+id/fragment_rate_comparison"
+        android:name="com.freeagent.testapp.ui.fragments.comparisonfragment.RateComparisonFragment"
+        tools:layout="@layout/fragment_rate_comparison">
+        <argument
+            android:name="comparisonFragArgsModel"
+            app:argType="com.freeagent.testapp.ui.helper.fragnavdatamodels.ComparisonFragArgsModel">
+        </argument>
     </fragment>
 
 </navigation>

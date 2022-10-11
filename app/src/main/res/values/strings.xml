@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">FreeAgent Programming Test</string>
+    <string name="amount">Amount</string>
+    <string name="fetch">fetch</string>
+    <string name="select_a_currency">Select a currency</string>
+    <string name="select_amount">Select amount</string>
 </resources>

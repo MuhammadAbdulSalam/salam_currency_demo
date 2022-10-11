@@ -6,6 +6,7 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_rates_list.xml" value="0.4078125" />
         <entry key="app/src/main/res/layout/item_view_currency.xml" value="0.4078125" />
+        <entry key="app/src/main/res/layout/layout_currency_select.xml" value="0.4786458333333333" />
         <entry key="app/src/main/res/layout/layout_item_currency_rate.xml" value="0.4984375" />
       </map>
     </option>

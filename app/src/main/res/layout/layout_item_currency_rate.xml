@@ -6,7 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp">
+        android:layout_marginVertical="@dimen/margin_10">
 
         <ImageView
             android:id="@+id/img_currency_flag"

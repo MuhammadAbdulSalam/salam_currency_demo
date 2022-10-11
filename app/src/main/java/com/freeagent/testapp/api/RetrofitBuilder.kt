@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit
 
 interface RetrofitBuilder {
 
-    @GET("/convert")
+    @GET("convert")
     fun convertCurrency(
         @Header("apikey") apiKey: String = "Io8uZmzHMU9Xw7annfPkln1eFqm1FeOy",
         @Query("amount") amount: String,
@@ -29,7 +29,7 @@ interface RetrofitBuilder {
      * Retrofit builder component
      */
     companion object {
-        private const val BASE_URL = "https://api.apilayer.com/fixer"
+        private const val BASE_URL = "https://api.apilayer.com/fixer/"
         private var gson = GsonBuilder()
             .setLenient()
             .create()

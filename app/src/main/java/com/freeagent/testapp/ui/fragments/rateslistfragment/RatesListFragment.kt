@@ -5,31 +5,35 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.freeagent.testapp.api.data.CurrencyRates
+import androidx.fragment.app.viewModels
 import com.freeagent.testapp.databinding.FragmentRatesListBinding
 import com.freeagent.testapp.ui.fragments.rateslistfragment.adapters.RatesListAdapter
-import com.freeagent.testapp.utils.AppCurrency
+import com.freeagent.testapp.ui.fragments.rateslistfragment.viewmodel.RateListViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class RatesListFragment : Fragment() {
 
     lateinit var binding: FragmentRatesListBinding
+    val viewModel: RateListViewModel by viewModels()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = FragmentRatesListBinding.inflate(inflater, container, false)
 
-        val listCurrency = arrayListOf<CurrencyRates>()
-        listCurrency.add(CurrencyRates(AppCurrency.AUD, "100.00"))
-        listCurrency.add(CurrencyRates(AppCurrency.GBP, "10.00"))
-        listCurrency.add(CurrencyRates(AppCurrency.SEK, "120.00"))
-        listCurrency.add(CurrencyRates(AppCurrency.USD, "130.00"))
-        listCurrency.add(CurrencyRates(AppCurrency.JPY, "140.00"))
-        listCurrency.add(CurrencyRates(AppCurrency.CAD, "110.00"))
+        viewModel.getCurrencyList("20", "GBP")
 
-        val adapter  = RatesListAdapter(listCurrency)
-        binding.ratesListRecycler.adapter = adapter
-        adapter.notifyDataSetChanged()
+        viewModel.currencyRateList.observe(this.viewLifecycleOwner) {
+            if (isVisible) {
+                val adapter = RatesListAdapter(it)
+                binding.ratesListRecycler.adapter = adapter
+                adapter.notifyDataSetChanged()
+            }
+        }
+
 
         return binding.root
     }

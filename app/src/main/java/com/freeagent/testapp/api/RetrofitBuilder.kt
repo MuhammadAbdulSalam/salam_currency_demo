@@ -1,5 +1,7 @@
 package com.freeagent.testapp.api
 
+import com.freeagent.testapp.api.data.apiconstants.Constants
+import com.freeagent.testapp.api.data.apiconstants.Constants.ENDPOINT_CONVERT
 import com.freeagent.testapp.api.data.convertresponse.ConvertResponse
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
@@ -14,9 +16,9 @@ import java.util.concurrent.TimeUnit
 
 interface RetrofitBuilder {
 
-    @GET("convert")
+    @GET(ENDPOINT_CONVERT)
     fun convertCurrency(
-        @Header("apikey") apiKey: String = "Io8uZmzHMU9Xw7annfPkln1eFqm1FeOy",
+        @Header("apikey") apiKey: String = Constants.API_KEY,
         @Query("amount") amount: String,
         @Query("from") fromCurrency: String,
         @Query("to") toCurrency: String,
@@ -29,7 +31,6 @@ interface RetrofitBuilder {
      * Retrofit builder component
      */
     companion object {
-        private const val BASE_URL = "https://api.apilayer.com/fixer/"
         private var gson = GsonBuilder()
             .setLenient()
             .create()
@@ -44,7 +45,7 @@ interface RetrofitBuilder {
 
         fun create(): RetrofitBuilder {
             return Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(Constants.BASE_URL)
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()

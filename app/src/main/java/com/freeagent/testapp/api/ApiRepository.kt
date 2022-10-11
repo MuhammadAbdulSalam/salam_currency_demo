@@ -27,7 +27,6 @@ class ApiRepository @Inject constructor(private val apiService: ApiHelper) {
                     else{
                         callback.onSuccess(response = mappedResponse)
                     }
-
                 }
 
                 override fun onFailure(call: Call<ConvertResponse>, t: Throwable) {

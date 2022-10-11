@@ -17,16 +17,28 @@ import android.R.attr.country
 import android.util.Log
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.recyclerview.selection.SelectionPredicates
+import androidx.recyclerview.selection.SelectionTracker
+import androidx.recyclerview.selection.StorageStrategy
+import com.freeagent.testapp.api.data.CurrencyRates
+import com.freeagent.testapp.ui.fragments.rateslistfragment.adapters.ItemsDetailsLookup
+import com.freeagent.testapp.ui.fragments.rateslistfragment.adapters.ItemsKeyProvider
+import com.google.android.material.snackbar.Snackbar
 
 
 @AndroidEntryPoint
 class RatesListFragment : Fragment() {
 
     private lateinit var binding: FragmentRatesListBinding
-    private val viewModel: RateListViewModel by viewModels()
+    private lateinit var rateListAdapter: RatesListAdapter
+    private lateinit var tracker: SelectionTracker<String>
+
     private var spinnerList = arrayListOf<String>()
     private var selectedCurrency = ""
     private var selectedAmount = ""
+
+    private val viewModel: RateListViewModel by viewModels()
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentRatesListBinding.inflate(inflater, container, false)
@@ -37,6 +49,7 @@ class RatesListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         AppCurrency.values().forEach { spinnerList.add(it.name) }
         initObserver()
+        setupRecycler()
 
         val spinnerAdapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, spinnerList.toArray())
         spinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
@@ -58,19 +71,54 @@ class RatesListFragment : Fragment() {
 
     }
 
+    /**
+     * Init observers to start observing currency lists and loading values
+     */
     private fun initObserver(){
 
         viewModel.currencyRateList.observe(this.viewLifecycleOwner) {
             if (isVisible) {
-                val adapter = RatesListAdapter(it)
-                binding.ratesListRecycler.adapter = adapter
-                adapter.notifyItemRangeChanged(0, it.lastIndex)
+                rateListAdapter.setListItems(it)
             }
         }
 
         viewModel.isLoading.observe(this.viewLifecycleOwner){ event ->
             event.getCoontentIfNotHandled()?.let {
                 binding.layoutLoadingView.visibility = if(it) View.VISIBLE else View.GONE
+            }
+        }
+    }
+
+    /**
+     * setup recycler and setup tracker to track selections
+     */
+    private fun setupRecycler(){
+
+        rateListAdapter = RatesListAdapter()
+        binding.ratesListRecycler.adapter = rateListAdapter
+
+        tracker = SelectionTracker.Builder("selectionItem", binding.ratesListRecycler,
+            ItemsKeyProvider(rateListAdapter), ItemsDetailsLookup(binding.ratesListRecycler),
+            StorageStrategy.createStringStorage()).withSelectionPredicate(selectionPredicate).build()
+
+        tracker.addObserver(selectionObserver)
+
+        rateListAdapter.tracker = tracker
+
+    }
+
+    private val selectionPredicate = object : SelectionTracker.SelectionPredicate<String>() {
+        override fun canSelectMultiple(): Boolean { return true }
+        override fun canSetStateForKey(key: String, nextState: Boolean): Boolean { return !(nextState && tracker.selection.size() >= 2) }
+        override fun canSetStateAtPosition(position: Int, nextState: Boolean): Boolean { return true }
+    }
+
+
+    private val selectionObserver = object : SelectionTracker.SelectionObserver<String>() {
+        override fun onSelectionChanged() {
+            super.onSelectionChanged()
+            binding.layoutCurrencySelect.btnHistory.visibility = if(tracker.selection.size() ==2) View.VISIBLE else View.INVISIBLE
+            binding.layoutCurrencySelect.btnHistory.setOnClickListener{ //TODO
             }
         }
     }

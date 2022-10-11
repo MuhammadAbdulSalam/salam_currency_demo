@@ -4,4 +4,5 @@
     <string name="fetch">fetch</string>
     <string name="select_a_currency">Select a currency</string>
     <string name="select_amount">Select amount</string>
+    <string name="history">History</string>
 </resources>

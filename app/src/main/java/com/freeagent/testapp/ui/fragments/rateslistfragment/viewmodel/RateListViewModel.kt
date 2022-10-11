@@ -65,7 +65,6 @@ class RateListViewModel @Inject constructor(private val apiRepository: ApiReposi
      * @param fromCurrency base currency
      */
     fun getCurrencyList(amount: String, fromCurrency: String) {
-        Log.d("========", "-----------------------------------running---------------")
         isLoading.postValue(Event(true))
         currencyRateList.value = arrayListOf()
         currencyRatesResponseList = arrayListOf()

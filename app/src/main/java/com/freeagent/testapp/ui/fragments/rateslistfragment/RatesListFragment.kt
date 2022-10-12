@@ -31,8 +31,7 @@ class RatesListFragment : Fragment() {
     private lateinit var binding: FragmentRatesListBinding
     private lateinit var rateListAdapter: RatesListAdapter
     private lateinit var tracker: SelectionTracker<String>
-
-    private var spinnerList = arrayListOf<String>()
+    private val viewModel: RateListViewModel by viewModels()
     private var selectedAmount = ""
 
     val currencyList = listOf<CurrencyRates>(
@@ -40,8 +39,6 @@ class RatesListFragment : Fragment() {
         CurrencyRates(appCurrency = AppCurrency.JPY, rate = "20"),
         CurrencyRates(appCurrency = AppCurrency.EUR, rate = "20")
     )
-
-    private val viewModel: RateListViewModel by viewModels()
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -51,18 +48,13 @@ class RatesListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        AppCurrency.values().forEach { spinnerList.add(it.name) }
         initObserver()
         setupRecycler()
 
-        val spinnerAdapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, spinnerList.toArray())
-        spinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
-
         binding.layoutCurrencySelect.btnFetch.setOnClickListener{
             selectedAmount = binding.layoutCurrencySelect.tvAmount.text.toString()
-            viewModel.getCurrencyList(selectedAmount)
+           // viewModel.getCurrencyList(selectedAmount)
         }
-
     }
 
     /**
@@ -72,7 +64,7 @@ class RatesListFragment : Fragment() {
 
         viewModel.currencyRateList.observe(this.viewLifecycleOwner) {
             if (isVisible) {
-                rateListAdapter.setListItems(it)
+               // rateListAdapter.setListItems(it)
             }
         }
 
@@ -96,17 +88,22 @@ class RatesListFragment : Fragment() {
             StorageStrategy.createStringStorage()).withSelectionPredicate(selectionPredicate).build()
 
         tracker.addObserver(selectionObserver)
-
         rateListAdapter.tracker = tracker
+        rateListAdapter.setListItems(currencyList)
     }
 
+    /**
+     * set selection predicates in case added restriction for max selection 2
+     */
     private val selectionPredicate = object : SelectionTracker.SelectionPredicate<String>() {
         override fun canSelectMultiple(): Boolean { return true }
         override fun canSetStateForKey(key: String, nextState: Boolean): Boolean { return !(nextState && tracker.selection.size() >= 2) }
         override fun canSetStateAtPosition(position: Int, nextState: Boolean): Boolean { return true }
     }
 
-
+    /**
+     * Tracker observer and set show history button
+     */
     private val selectionObserver = object : SelectionTracker.SelectionObserver<String>() {
         override fun onSelectionChanged() {
             super.onSelectionChanged()
@@ -117,7 +114,7 @@ class RatesListFragment : Fragment() {
                     exchangeRateCurrencyOne = tracker.selection.elementAt(0),
                     exchangeRateCurrencyTow = tracker.selection.elementAt(1)
                 )
-                findNavController().navigate(RatesListFragmentDirections.actionFragmentSplashScreenToFragmentLogin(fragArgs))
+                findNavController().navigate(RatesListFragmentDirections.actionFragmentHomeScreenToFragmentComparison(fragArgs))
             }
         }
     }

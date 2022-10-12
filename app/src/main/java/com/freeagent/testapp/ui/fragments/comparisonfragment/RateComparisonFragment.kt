@@ -19,6 +19,7 @@ import java.text.DateFormat
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 @AndroidEntryPoint
@@ -28,6 +29,11 @@ class RateComparisonFragment: Fragment() {
     private val args : RateComparisonFragmentArgs by navArgs()
     private val viewModel: RateListViewModel by viewModels()
     private lateinit var tableGenerator: TableGenerator
+
+    private var comparisonCurrencyOne =""
+    private var comparisonCurrencyTwo =""
+
+    data class TableRowData(var date: String = "", var currencyOneRate: String = "", var currencyTwoRate: String= "")
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentRateComparisonBinding.inflate(inflater, container, false)
@@ -40,17 +46,15 @@ class RateComparisonFragment: Fragment() {
 
         initObservers()
 
+       comparisonCurrencyOne = args.comparisonFragArgsModel.exchangeRateCurrencyOne
+        comparisonCurrencyTwo = args.comparisonFragArgsModel.exchangeRateCurrencyTow
+
         val currencySymbol = Currency.getInstance(AppCurrency.EUR.name).symbol
-        binding.imgCurrencyFlag.setImageResource(AppCurrency.EUR.imageResource)
-        binding.tvCurrencyName.text = AppCurrency.EUR.name
-        binding.tvCurrencyValue.text = "$currencySymbol ${args.comparisonFragArgsModel.amount}"
+        binding.layoutBaseCurrency.imgCurrencyFlag.setImageResource(AppCurrency.EUR.imageResource)
+        binding.layoutBaseCurrency.tvCurrencyName.text = AppCurrency.EUR.name
+        binding.layoutBaseCurrency.tvCurrencyValue.text = "$currencySymbol ${args.comparisonFragArgsModel.amount}"
 
-        val request = TimeSeriesRequest(
-            HelperUtility.getDate(),
-            HelperUtility.getPreviousDate(),
-            "${args.comparisonFragArgsModel.exchangeRateCurrencyOne},${args.comparisonFragArgsModel.exchangeRateCurrencyTow}"
-        )
-
+        val request = TimeSeriesRequest(HelperUtility.getDate(), HelperUtility.getPreviousDate(), "$comparisonCurrencyOne,$comparisonCurrencyTwo")
         viewModel.getCurrencyTimeSeries(request)
     }
 
@@ -63,20 +67,45 @@ class RateComparisonFragment: Fragment() {
 
         viewModel.listHistoricData.observe(this.viewLifecycleOwner) {
             if (isVisible) {
-                createHistoryTable(it)
+                val tableRows = mapTimeSeriesResponseToTableRows(it)
+               createHistoryTable(tableRows)
             }
         }
     }
 
-    private fun createHistoryTable(list :ArrayList<RatesHistoricDataMapper.CurrencyHistoricRate>){
-        binding.layoutCurrencyTable.currencyOneName.text = list[0].currencyRate[0].currencyName
-        binding.layoutCurrencyTable.currencyTwoName.text = list[0].currencyRate[1].currencyName
+    /**
+     * convert response data to table row data to populate on table
+     * To make sure correct values are added to each field
+     */
+    private fun mapTimeSeriesResponseToTableRows(list :ArrayList<RatesHistoricDataMapper.CurrencyHistoricRate>): List<TableRowData>{
+        val tableRowsList = arrayListOf<TableRowData>()
+        list.forEach {
+            val model = TableRowData()
+            model.date = it.date.toString()
+            it.currencyRate.forEach { rate ->
+                if(rate.currencyName == comparisonCurrencyOne){
+                    model.currencyOneRate = HelperUtility.getConvertedRate(rate.currencyRate, args.comparisonFragArgsModel.amount)
+                }else if(rate.currencyName == comparisonCurrencyTwo){
+                    model.currencyTwoRate = HelperUtility.getConvertedRate(rate.currencyRate, args.comparisonFragArgsModel.amount)
+                }
+            }
+            tableRowsList.add(model)
+        }
+        return tableRowsList.toList()
+    }
+
+    /**
+     * This will create rows below current table header
+     *
+     * @param list
+     */
+    private fun createHistoryTable(list :List<TableRowData>){
+        binding.layoutCurrencyTable.currencyOneName.text = comparisonCurrencyOne
+        binding.layoutCurrencyTable.currencyTwoName.text = comparisonCurrencyTwo
+        binding.layoutCurrencyTable.tlConversionHistory.visibility = View.VISIBLE
         var index = 1
         list.forEach {
-            val listTextViews = arrayListOf<String>()
-            listTextViews.add(it.date.toString())
-            it.currencyRate.forEach { rate-> listTextViews.add(HelperUtility.getConvertedRate(rate.currencyRate, args.comparisonFragArgsModel.amount)) }
-            val row = tableGenerator.generateRow(listTextViews)
+            val row = tableGenerator.generateRow(listOf(it.date, it.currencyOneRate, it.currencyTwoRate))
             binding.layoutCurrencyTable.tlConversionHistory.addView(row, index)
             index++
         }

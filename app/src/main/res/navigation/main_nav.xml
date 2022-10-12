@@ -10,7 +10,7 @@
         android:name="com.freeagent.testapp.ui.fragments.rateslistfragment.RatesListFragment"
         tools:layout="@layout/fragment_rates_list">
         <action
-            android:id="@+id/action_fragment_splash_screen_to_fragment_login"
+            android:id="@+id/action_fragment_home_screen_to_fragment_comparison"
             app:destination="@id/fragment_rate_comparison"
             app:enterAnim="@anim/slide_in_from_right"
             app:exitAnim="@anim/slide_out_to_left"

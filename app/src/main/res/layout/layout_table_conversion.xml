@@ -9,6 +9,8 @@
         android:id="@+id/tl_conversion_history"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="invisible"
+        tools:visibility="visible"
         android:weightSum="3">
         <TableRow
             android:background="@color/purple_200"

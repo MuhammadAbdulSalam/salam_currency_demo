@@ -11,6 +11,7 @@ import com.freeagent.testapp.api.data.timeseriesdata.RatesHistoricDataMapper
 import com.freeagent.testapp.api.data.timeseriesdata.TimeSeriesRequest
 import com.freeagent.testapp.databinding.FragmentRateComparisonBinding
 import com.freeagent.testapp.ui.fragments.rateslistfragment.viewmodel.RateListViewModel
+import com.freeagent.testapp.ui.helper.HelperUtility
 import com.freeagent.testapp.utils.AppCurrency
 import com.freeagent.testapp.utils.TableGenerator
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,8 +26,8 @@ class RateComparisonFragment: Fragment() {
 
     private lateinit var binding: FragmentRateComparisonBinding
     private val args : RateComparisonFragmentArgs by navArgs()
-    private lateinit var tableGenerator: TableGenerator
     private val viewModel: RateListViewModel by viewModels()
+    private lateinit var tableGenerator: TableGenerator
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentRateComparisonBinding.inflate(inflater, container, false)
@@ -49,8 +50,8 @@ class RateComparisonFragment: Fragment() {
         binding.tvCurrencyValue.text = "$currencySymbol ${args.comparisonFragArgsModel.amount}"
 
         val request = TimeSeriesRequest(
-            getDate(),
-            getYesterdayDateString(),
+            HelperUtility.getDate(),
+            HelperUtility.getPreviousDate(),
              args.comparisonFragArgsModel.selectedCurrency,
             "${args.comparisonFragArgsModel.exchangeRateCurrencyOne},${args.comparisonFragArgsModel.exchangeRateCurrencyTow}"
         )
@@ -79,33 +80,11 @@ class RateComparisonFragment: Fragment() {
         list.forEach {
             val listTextViews = arrayListOf<String>()
             listTextViews.add(it.date.toString())
-            it.currencyRate.forEach { rate-> listTextViews.add(getConvertedRate(rate.currencyRate, args.comparisonFragArgsModel.amount)) }
+            it.currencyRate.forEach { rate-> listTextViews.add(HelperUtility.getConvertedRate(rate.currencyRate, args.comparisonFragArgsModel.amount)) }
             val row = tableGenerator.generateRow(listTextViews)
             binding.layoutCurrencyTable.tlConversionHistory.addView(row, index)
             index++
         }
-    }
-
-    private fun getDate(): String {
-        return SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
-    }
-
-    private fun yesterday(): Date {
-        val cal = Calendar.getInstance()
-        cal.add(Calendar.DATE, -5)
-        return cal.time
-    }
-
-    private fun getYesterdayDateString(): String {
-        val dateFormat: DateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        return dateFormat.format(yesterday())
-    }
-
-
-    private fun getConvertedRate(rate: String, amount: String): String {
-        val conversionValue = rate.toDouble() * amount.toDouble()
-        val df = DecimalFormat("0.00")
-        return df.format(conversionValue)
     }
 
 }

@@ -1,9 +1,13 @@
 package com.freeagent.testapp.api
 
+import android.util.Log
 import com.freeagent.testapp.api.apihelper.ApiHelper
 import com.freeagent.testapp.api.data.CurrencyRates
 import com.freeagent.testapp.api.data.convertresponse.ConvertCurrencyRequest
 import com.freeagent.testapp.api.data.convertresponse.ConvertResponse
+import com.freeagent.testapp.api.data.timeseriesdata.RatesHistoricDataMapper
+import com.freeagent.testapp.api.data.timeseriesdata.TimeSeriesRequest
+import com.freeagent.testapp.api.data.timeseriesdata.TimeSeriesResponse
 import com.freeagent.testapp.utils.AppCurrency
 import com.freeagent.testapp.utils.OnCallBack
 import kotlinx.coroutines.CoroutineScope
@@ -50,6 +54,29 @@ class ApiRepository @Inject constructor(private val apiService: ApiHelper) {
         }
 
         return currencyRateModel
+    }
+
+    fun getRatesTimeSeries(request: TimeSeriesRequest, callback: OnCallBack<ArrayList<RatesHistoricDataMapper.CurrencyHistoricRate>>){
+
+        apiService.getTimeSeries(request).enqueue(object : Callback<TimeSeriesResponse>{
+            override fun onResponse(call: Call<TimeSeriesResponse>, response: Response<TimeSeriesResponse>) {
+                if(response.isSuccessful){
+                    val listHistoricRates = RatesHistoricDataMapper.mapRatesHistoricData(response.body()?.rates)
+
+                    if(listHistoricRates == null){
+                        callback.onError("wrong data", response.code())
+                    }
+                    else{
+                        callback.onSuccess(listHistoricRates)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<TimeSeriesResponse>, t: Throwable) {
+                callback.onError("call failed", 0)
+            }
+
+        })
     }
 
 }

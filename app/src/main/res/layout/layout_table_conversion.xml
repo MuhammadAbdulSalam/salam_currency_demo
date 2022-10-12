@@ -1,96 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <data>
-
-        <variable
-            name="dataset"
-            type="com.freeagent.testapp.api.data.ConversionHistory" />
-
-    </data>
-
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-
     <TableLayout
+        android:id="@+id/tl_conversion_history"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:weightSum="3">
         <TableRow
             android:background="@color/purple_200"
             android:padding="@dimen/margin_10">
             <com.google.android.material.textview.MaterialTextView
                 style="@style/table_cell_header"
-                android:text="Date" />
+                android:text="@string/date" />
             <TextView
+                android:id="@+id/currency_one_name"
                 style="@style/table_cell_header"
-                android:text="@{dataset.dayTwo.conversionRatesOne.appCurrency.name()}" />
+                tools:text="currency name" />
             <TextView
+                android:id="@+id/currency_two_name"
                 style="@style/table_cell_header"
-                android:text="@{dataset.dayTwo.conversionRatesTwo.appCurrency.name()}" />
+                tools:text="currency name" />
         </TableRow>
 
-        <TableRow>
-            <com.google.android.material.textview.MaterialTextView
-                style="@style/table_cell_data"
-                android:text="@{dataset.dayOne.date}" />
-            <TextView
-                style="@style/table_cell_data"
-                android:text="@{dataset.dayOne.conversionRatesOne.rate}" />
-            <TextView
-                style="@style/table_cell_data"
-                android:text="@{dataset.dayOne.conversionRatesTwo.rate}" />
-        </TableRow>
-
-        <TableRow>
-            <com.google.android.material.textview.MaterialTextView
-                style="@style/table_cell_data"
-                android:text="@{dataset.dayTwo.date}" />
-            <TextView
-                style="@style/table_cell_data"
-                android:text="@{dataset.dayTwo.conversionRatesOne.rate}" />
-            <TextView
-                style="@style/table_cell_data"
-                android:text="@{dataset.dayTwo.conversionRatesTwo.rate}" />
-        </TableRow>
-
-        <TableRow>
-            <com.google.android.material.textview.MaterialTextView
-                style="@style/table_cell_data"
-                android:text="@{dataset.dayThree.date}" />
-            <TextView
-                style="@style/table_cell_data"
-                android:text="@{dataset.dayThree.conversionRatesOne.rate}" />
-            <TextView
-                style="@style/table_cell_data"
-                android:text="@{dataset.dayThree.conversionRatesTwo.rate}" />
-        </TableRow>
-
-        <TableRow>
-            <com.google.android.material.textview.MaterialTextView
-                style="@style/table_cell_data"
-                android:text="@{dataset.dayFour.date}" />
-            <TextView
-                style="@style/table_cell_data"
-                android:text="@{dataset.dayFour.conversionRatesOne.rate}" />
-            <TextView
-                style="@style/table_cell_data"
-                android:text="@{dataset.dayFour.conversionRatesTwo.rate}" />
-        </TableRow>
-
-        <TableRow>
-            <com.google.android.material.textview.MaterialTextView
-                style="@style/table_cell_data"
-                android:text="@{dataset.dayFive.date}" />
-            <TextView
-                style="@style/table_cell_data"
-                android:text="@{dataset.dayFive.conversionRatesOne.rate}" />
-            <TextView
-                style="@style/table_cell_data"
-                android:text="@{dataset.dayFive.conversionRatesTwo.rate}" />
-        </TableRow>
 
     </TableLayout>
 

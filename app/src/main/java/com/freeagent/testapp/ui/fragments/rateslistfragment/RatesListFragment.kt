@@ -1,7 +1,6 @@
 package com.freeagent.testapp.ui.fragments.rateslistfragment
 
 import android.R
-import android.R.attr
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,19 +12,17 @@ import com.freeagent.testapp.ui.fragments.rateslistfragment.adapters.RatesListAd
 import com.freeagent.testapp.ui.fragments.rateslistfragment.viewmodel.RateListViewModel
 import com.freeagent.testapp.utils.AppCurrency
 import dagger.hilt.android.AndroidEntryPoint
-import android.R.attr.country
 import android.util.Log
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.selection.SelectionPredicates
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StorageStrategy
 import com.freeagent.testapp.api.data.CurrencyRates
 import com.freeagent.testapp.ui.fragments.rateslistfragment.adapters.ItemsDetailsLookup
 import com.freeagent.testapp.ui.fragments.rateslistfragment.adapters.ItemsKeyProvider
 import com.freeagent.testapp.ui.helper.fragnavdatamodels.ComparisonFragArgsModel
-import com.google.android.material.snackbar.Snackbar
+import org.json.JSONObject
 
 
 @AndroidEntryPoint
@@ -38,6 +35,12 @@ class RatesListFragment : Fragment() {
     private var spinnerList = arrayListOf<String>()
     private var selectedCurrency = ""
     private var selectedAmount = ""
+
+    val currencyList = listOf<CurrencyRates>(
+        CurrencyRates(appCurrency = AppCurrency.GBP, rate = "20"),
+        CurrencyRates(appCurrency = AppCurrency.JPY, rate = "20"),
+        CurrencyRates(appCurrency = AppCurrency.EUR, rate = "20")
+    )
 
     private val viewModel: RateListViewModel by viewModels()
 
@@ -68,7 +71,7 @@ class RatesListFragment : Fragment() {
 
         binding.layoutCurrencySelect.btnFetch.setOnClickListener{
             selectedAmount = binding.layoutCurrencySelect.tvAmount.text.toString()
-            viewModel.getCurrencyList(selectedAmount, selectedCurrency)
+            //TODO undo comment viewModel.getCurrencyList(selectedAmount, selectedCurrency)
         }
 
     }
@@ -80,7 +83,7 @@ class RatesListFragment : Fragment() {
 
         viewModel.currencyRateList.observe(this.viewLifecycleOwner) {
             if (isVisible) {
-                rateListAdapter.setListItems(it)
+                //TODO undo comment rateListAdapter.setListItems(it)
             }
         }
 
@@ -106,6 +109,7 @@ class RatesListFragment : Fragment() {
         tracker.addObserver(selectionObserver)
 
         rateListAdapter.tracker = tracker
+        rateListAdapter.setListItems(currencyList)
 
     }
 

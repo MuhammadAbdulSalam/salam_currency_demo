@@ -3,6 +3,7 @@ package com.freeagent.testapp.api
 import com.freeagent.testapp.api.data.apiconstants.Constants
 import com.freeagent.testapp.api.data.apiconstants.Constants.ENDPOINT_CONVERT
 import com.freeagent.testapp.api.data.convertresponse.ConvertResponse
+import com.freeagent.testapp.api.data.timeseriesdata.TimeSeriesResponse
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -24,8 +25,14 @@ interface RetrofitBuilder {
         @Query("to") toCurrency: String,
     ): Call<ConvertResponse>
 
-
-
+    @GET("timeseries")
+    fun getTimeSeries(
+        @Header("apikey") apiKey: String = Constants.API_KEY,
+        @Query("end_date") endDate: String,
+        @Query("start_date") startDate: String,
+        @Query("base") base: String,
+        @Query("symbols") symbols: String,
+        ): Call<TimeSeriesResponse>
 
     /**
      * Retrofit builder component

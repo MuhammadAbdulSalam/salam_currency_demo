@@ -4,18 +4,14 @@
     xmlns:tool="http://schemas.android.com/tools"
     xmlns:bind="http://schemas.android.com/apk/res-auto">
 
-    <data>
-
-        <variable
-            name="dataset"
-            type="com.freeagent.testapp.api.data.ConversionHistory" />
-
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="@dimen/margin_10">
+        android:layout_height="match_parent">
+
+
+        <include android:id="@+id/layout_loading_view"
+            layout="@layout/include_loading_view"
+            android:visibility="gone"/>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cv_layout_selected_currency"
@@ -70,7 +66,7 @@
             layout="@layout/layout_table_conversion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            bind:dataset="@{dataset}"
+            android:layout_margin="@dimen/margin_10"
             app:layout_constraintTop_toBottomOf="@id/cv_layout_selected_currency"
             android:layout_marginTop="@dimen/margin_20"/>
 

@@ -10,7 +10,6 @@ class ApiHelper @Inject constructor(private val apiService: RetrofitBuilder) {
     fun convertCurrency(convertCurrencyRequest: ConvertCurrencyRequest) =
         apiService.convertCurrency(
             amount = convertCurrencyRequest.amount,
-            fromCurrency = convertCurrencyRequest.from,
             toCurrency = convertCurrencyRequest.to
         )
 
@@ -18,7 +17,6 @@ class ApiHelper @Inject constructor(private val apiService: RetrofitBuilder) {
         apiService.getTimeSeries(
             endDate = timeSeriesRequest.endDate,
             startDate = timeSeriesRequest.startDate,
-            base = timeSeriesRequest.base,
             symbols = timeSeriesRequest.symbols
         )
 

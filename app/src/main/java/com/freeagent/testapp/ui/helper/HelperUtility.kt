@@ -11,7 +11,7 @@ object HelperUtility {
         return SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
     }
 
-    fun minusFiveDays(): Date {
+    private fun minusFiveDays(): Date {
         val cal = Calendar.getInstance()
         cal.add(Calendar.DATE, -5)
         return cal.time

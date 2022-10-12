@@ -38,21 +38,16 @@ class RateComparisonFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
         tableGenerator = TableGenerator(requireContext())
 
-        val selectedCurrency =  AppCurrency.values().first {
-            it.name == args.comparisonFragArgsModel.selectedCurrency
-        }
-
         initObservers()
 
-        val currencySymbol = Currency.getInstance(selectedCurrency.name).symbol
-        binding.imgCurrencyFlag.setImageResource(selectedCurrency.imageResource)
-        binding.tvCurrencyName.text = selectedCurrency.name
+        val currencySymbol = Currency.getInstance(AppCurrency.EUR.name).symbol
+        binding.imgCurrencyFlag.setImageResource(AppCurrency.EUR.imageResource)
+        binding.tvCurrencyName.text = AppCurrency.EUR.name
         binding.tvCurrencyValue.text = "$currencySymbol ${args.comparisonFragArgsModel.amount}"
 
         val request = TimeSeriesRequest(
             HelperUtility.getDate(),
             HelperUtility.getPreviousDate(),
-             args.comparisonFragArgsModel.selectedCurrency,
             "${args.comparisonFragArgsModel.exchangeRateCurrencyOne},${args.comparisonFragArgsModel.exchangeRateCurrencyTow}"
         )
 

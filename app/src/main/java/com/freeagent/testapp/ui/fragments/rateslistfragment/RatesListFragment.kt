@@ -33,7 +33,6 @@ class RatesListFragment : Fragment() {
     private lateinit var tracker: SelectionTracker<String>
 
     private var spinnerList = arrayListOf<String>()
-    private var selectedCurrency = ""
     private var selectedAmount = ""
 
     val currencyList = listOf<CurrencyRates>(
@@ -58,20 +57,10 @@ class RatesListFragment : Fragment() {
 
         val spinnerAdapter = ArrayAdapter(requireContext(), R.layout.simple_spinner_item, spinnerList.toArray())
         spinnerAdapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
-        binding.layoutCurrencySelect.spinnerCurrency.adapter = spinnerAdapter
-        binding.layoutCurrencySelect.spinnerCurrency.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                selectedCurrency = spinnerList[position]
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                binding.layoutCurrencySelect.spinnerCurrency.setSelection(0)
-            }
-        }
 
         binding.layoutCurrencySelect.btnFetch.setOnClickListener{
             selectedAmount = binding.layoutCurrencySelect.tvAmount.text.toString()
-            //TODO undo comment viewModel.getCurrencyList(selectedAmount, selectedCurrency)
+            viewModel.getCurrencyList(selectedAmount)
         }
 
     }
@@ -83,7 +72,7 @@ class RatesListFragment : Fragment() {
 
         viewModel.currencyRateList.observe(this.viewLifecycleOwner) {
             if (isVisible) {
-                //TODO undo comment rateListAdapter.setListItems(it)
+                rateListAdapter.setListItems(it)
             }
         }
 
@@ -109,8 +98,6 @@ class RatesListFragment : Fragment() {
         tracker.addObserver(selectionObserver)
 
         rateListAdapter.tracker = tracker
-        rateListAdapter.setListItems(currencyList)
-
     }
 
     private val selectionPredicate = object : SelectionTracker.SelectionPredicate<String>() {
@@ -127,7 +114,6 @@ class RatesListFragment : Fragment() {
             binding.layoutCurrencySelect.btnHistory.setOnClickListener{
                 val fragArgs = ComparisonFragArgsModel(
                     amount = selectedAmount,
-                    selectedCurrency = selectedCurrency,
                     exchangeRateCurrencyOne = tracker.selection.elementAt(0),
                     exchangeRateCurrencyTow = tracker.selection.elementAt(1)
                 )

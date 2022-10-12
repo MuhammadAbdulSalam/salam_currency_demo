@@ -4,6 +4,7 @@ import com.freeagent.testapp.api.data.apiconstants.Constants
 import com.freeagent.testapp.api.data.apiconstants.Constants.ENDPOINT_CONVERT
 import com.freeagent.testapp.api.data.convertresponse.ConvertResponse
 import com.freeagent.testapp.api.data.timeseriesdata.TimeSeriesResponse
+import com.freeagent.testapp.utils.AppCurrency
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -21,7 +22,7 @@ interface RetrofitBuilder {
     fun convertCurrency(
         @Header("apikey") apiKey: String = Constants.API_KEY,
         @Query("amount") amount: String,
-        @Query("from") fromCurrency: String,
+        @Query("from") fromCurrency: String = AppCurrency.EUR.name,
         @Query("to") toCurrency: String,
     ): Call<ConvertResponse>
 
@@ -30,7 +31,7 @@ interface RetrofitBuilder {
         @Header("apikey") apiKey: String = Constants.API_KEY,
         @Query("end_date") endDate: String,
         @Query("start_date") startDate: String,
-        @Query("base") base: String,
+        @Query("base") base: String = AppCurrency.EUR.name,
         @Query("symbols") symbols: String,
         ): Call<TimeSeriesResponse>
 

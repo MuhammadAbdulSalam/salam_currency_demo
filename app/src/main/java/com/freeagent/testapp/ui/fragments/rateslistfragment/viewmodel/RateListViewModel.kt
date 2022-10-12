@@ -32,7 +32,7 @@ class RateListViewModel @Inject constructor(private val apiRepository: ApiReposi
      * @param fromCurrency base currency
      * @param index index in AppCurrency Enum Liist
      */
-    fun getCurrencyRecursive(amount: String, fromCurrency: String, index: Int = 0) {
+    fun getCurrencyRecursive(amount: String, index: Int = 0) {
 
         if (index == AppCurrency.values().size) {
             completeRecursiveRequest(currencyRatesResponseList)
@@ -40,10 +40,10 @@ class RateListViewModel @Inject constructor(private val apiRepository: ApiReposi
         }
 
         val appCurrency = AppCurrency.values()[index]
-        val request = ConvertCurrencyRequest(amount, fromCurrency, appCurrency.name)
+        val request = ConvertCurrencyRequest(amount, appCurrency.name)
 
-        if (request.from == appCurrency.name)  {
-            getCurrencyRecursive(amount, fromCurrency, index + 1)
+        if ( appCurrency.name == AppCurrency.EUR.name)  { //since EUR is base
+            getCurrencyRecursive(amount, index + 1)
             return
         }
 
@@ -51,7 +51,7 @@ class RateListViewModel @Inject constructor(private val apiRepository: ApiReposi
             apiRepository.convertCurrency(request, object : OnCallBack<CurrencyRates?> {
                 override fun onSuccess(response: CurrencyRates?) {
                     response?.let {  currencyRatesResponseList.add(response) }
-                    getCurrencyRecursive(amount, fromCurrency, index + 1)
+                    getCurrencyRecursive(amount, index + 1)
                 }
 
                 override fun onError(message: String, errorCode: Int) {
@@ -67,11 +67,11 @@ class RateListViewModel @Inject constructor(private val apiRepository: ApiReposi
      * @param amount amount to be converted
      * @param fromCurrency base currency
      */
-    fun getCurrencyList(amount: String, fromCurrency: String) {
+    fun getCurrencyList(amount: String) {
         isLoading.postValue(Event(true))
         currencyRateList.value = arrayListOf()
         currencyRatesResponseList = arrayListOf()
-        getCurrencyRecursive(amount, fromCurrency)
+        getCurrencyRecursive(amount)
     }
 
     /**

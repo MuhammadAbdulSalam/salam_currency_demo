@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TableLayout
+        android:id="@+id/tl_conversion_history"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+        tools:visibility="visible"
+        android:weightSum="3">
+        <TableRow
+            android:background="@color/purple_200"
+            android:padding="@dimen/margin_10">
+            <com.google.android.material.textview.MaterialTextView
+                style="@style/table_cell_header"
+                android:text="@string/date" />
+            <TextView
+                android:id="@+id/currency_one_name"
+                style="@style/table_cell_header"
+                tools:text="currency name" />
+            <TextView
+                android:id="@+id/currency_two_name"
+                style="@style/table_cell_header"
+                tools:text="currency name" />
+        </TableRow>
+
+
+    </TableLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -7,10 +7,10 @@ enum class AppCurrency(val imageResource: Int) {
     EUR(R.drawable.ic_euro),
     JPY(R.drawable.ic_japan),
     GBP(R.drawable.ic_gbp),
-//    AUD(R.drawable.ic_aud),
-//    CAD(R.drawable.ic_cad),
-//    CHF(R.drawable.ic_chf),
-//    CNY(R.drawable.ic_cny),
-//    SEK(R.drawable.ic_sek),
-//    NZD(R.drawable.ic_nzd)
+    AUD(R.drawable.ic_aud),
+    CAD(R.drawable.ic_cad),
+    CHF(R.drawable.ic_chf),
+    CNY(R.drawable.ic_cny),
+    SEK(R.drawable.ic_sek),
+    NZD(R.drawable.ic_nzd)
 }

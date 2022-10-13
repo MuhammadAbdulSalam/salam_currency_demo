@@ -8,4 +8,23 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="table_cell_header" parent="Widget.MaterialComponents.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="table_cell_data" parent="Widget.MaterialComponents.TextView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:padding">@dimen/margin_10</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:background">@drawable/ic_table_cell_background</item>
+
+    </style>
+
 </resources>

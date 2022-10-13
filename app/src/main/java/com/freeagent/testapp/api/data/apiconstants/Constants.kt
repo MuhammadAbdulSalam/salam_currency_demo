@@ -1,10 +1,8 @@
 package com.freeagent.testapp.api.data.apiconstants
 
 object Constants {
-
-    const val API_KEY = "4b4teXcbFYua0copRMIZRBi5plfhlfHz"
-    const val BASE_URL = "https://api.apilayer.com/fixer/"
-
+    const val API_KEY = "iUDFin3N45kd9JXS2h7WyCcPr4rJ2z1U"
     const val ENDPOINT_CONVERT = "convert"
+    const val ENDPOINT_TIMESERIES= "timeseries"
 
 }

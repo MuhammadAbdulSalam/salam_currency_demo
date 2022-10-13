@@ -35,9 +35,14 @@ android {
     }
 
     buildTypes {
+        debug{
+            buildConfigField('String', 'API_URL', '"https://api.apilayer.com/fixer/"')
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField('String', 'API_URL', '"https://api.apilayer.com/fixer/"')
+
         }
     }
     compileOptions {
@@ -61,6 +66,7 @@ android {
 dependencies {
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.test.espresso:espresso-contrib:3.4.0'
     kapt "com.google.dagger:hilt-android-compiler:$rootProject.hiltVersion"
     implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
     implementation "androidx.fragment:fragment-ktx:$rootProject.fragmentVersion"
@@ -85,6 +91,8 @@ dependencies {
 
     kaptAndroidTest "com.google.dagger:hilt-android-compiler:$rootProject.hiltVersion"
     testImplementation "junit:junit:$rootProject.junitVersion"
+    testImplementation 'org.json:json:20210307'
+    testImplementation "org.mockito:mockito-core:2.21.0"
     androidTestImplementation "androidx.test.ext:junit:$rootProject.testExtJunit"
     androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoVersion"
     androidTestImplementation "com.google.dagger:hilt-android-testing:$rootProject.hiltVersion"

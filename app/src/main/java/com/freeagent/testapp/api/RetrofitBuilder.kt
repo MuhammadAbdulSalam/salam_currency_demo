@@ -1,7 +1,9 @@
 package com.freeagent.testapp.api
 
+import com.freeagent.testapp.BuildConfig
 import com.freeagent.testapp.api.data.apiconstants.Constants
 import com.freeagent.testapp.api.data.apiconstants.Constants.ENDPOINT_CONVERT
+import com.freeagent.testapp.api.data.apiconstants.Constants.ENDPOINT_TIMESERIES
 import com.freeagent.testapp.api.data.convertresponse.ConvertResponse
 import com.freeagent.testapp.api.data.timeseriesdata.TimeSeriesResponse
 import com.freeagent.testapp.utils.AppCurrency
@@ -26,7 +28,7 @@ interface RetrofitBuilder {
         @Query("to") toCurrency: String,
     ): Call<ConvertResponse>
 
-    @GET("timeseries")
+    @GET(ENDPOINT_TIMESERIES)
     fun getTimeSeries(
         @Header("apikey") apiKey: String = Constants.API_KEY,
         @Query("end_date") endDate: String,
@@ -53,7 +55,7 @@ interface RetrofitBuilder {
 
         fun create(): RetrofitBuilder {
             return Retrofit.Builder()
-                .baseUrl(Constants.BASE_URL)
+                .baseUrl(BuildConfig.API_URL)
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build()

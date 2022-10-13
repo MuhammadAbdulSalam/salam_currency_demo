@@ -34,13 +34,6 @@ class RatesListFragment : Fragment() {
     private val viewModel: RateListViewModel by viewModels()
     private var selectedAmount = ""
 
-    val currencyList = listOf<CurrencyRates>(
-        CurrencyRates(appCurrency = AppCurrency.GBP, rate = "20"),
-        CurrencyRates(appCurrency = AppCurrency.JPY, rate = "20"),
-        CurrencyRates(appCurrency = AppCurrency.EUR, rate = "20")
-    )
-
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentRatesListBinding.inflate(inflater, container, false)
         return binding.root
@@ -53,7 +46,7 @@ class RatesListFragment : Fragment() {
 
         binding.layoutCurrencySelect.btnFetch.setOnClickListener{
             selectedAmount = binding.layoutCurrencySelect.tvAmount.text.toString()
-           // viewModel.getCurrencyList(selectedAmount)
+            viewModel.getCurrencyList(selectedAmount)
         }
     }
 
@@ -64,7 +57,7 @@ class RatesListFragment : Fragment() {
 
         viewModel.currencyRateList.observe(this.viewLifecycleOwner) {
             if (isVisible) {
-               // rateListAdapter.setListItems(it)
+                rateListAdapter.setListItems(it)
             }
         }
 
@@ -89,7 +82,6 @@ class RatesListFragment : Fragment() {
 
         tracker.addObserver(selectionObserver)
         rateListAdapter.tracker = tracker
-        rateListAdapter.setListItems(currencyList)
     }
 
     /**

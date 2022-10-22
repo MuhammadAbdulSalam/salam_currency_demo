@@ -4,7 +4,7 @@ import com.freeagent.testapp.R
 import com.freeagent.testapp.robots.baserobot.BaseRobot
 
 
-fun onRateListScreen(func: RateListRobot.() -> Unit) = RateListRobot().apply { func }
+fun onRateListScreen(func: RateListRobot.() -> Unit) = RateListRobot().apply { func() }
 
 class RateListRobot: BaseRobot() {
 
@@ -16,12 +16,12 @@ class RateListRobot: BaseRobot() {
         sentText(R.id.tv_amount, amount)
     }
 
-    fun recyclerLongPress(position: Int){
+    fun recyclerItemSelect(position: Int){
         longPress(position)
     }
 
     fun onHistoryClicked(){
-        clickButton(R.id.btn_history, "history")
+        clickButton(R.id.btn_history, "History")
     }
 
 }

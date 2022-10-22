@@ -1,6 +1,7 @@
 package com.freeagent.testapp.ui.fragments.rateslistfragment.adapters
 
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.selection.ItemDetailsLookup
@@ -60,6 +61,7 @@ class RatesListAdapter : RecyclerView.Adapter<RatesListAdapter.RatesListViewHold
         }
 
         fun getItem(): ItemDetailsLookup.ItemDetails<String> = object : ItemDetailsLookup.ItemDetails<String>() {
+            override fun inSelectionHotspot(e: MotionEvent): Boolean = true
                 override fun getPosition(): Int = bindingAdapterPosition
                 override fun getSelectionKey(): String = currencyRatesList[bindingAdapterPosition].appCurrency.name
             }

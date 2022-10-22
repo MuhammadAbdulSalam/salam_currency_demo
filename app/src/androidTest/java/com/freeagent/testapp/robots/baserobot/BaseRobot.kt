@@ -8,7 +8,6 @@ import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
-import com.freeagent.testapp.ClickOnRecyclerItem
 import com.freeagent.testapp.R
 import org.hamcrest.Matchers
 
@@ -32,7 +31,7 @@ open class BaseRobot {
 
     fun longPress(position: Int){
         onView(withId(R.id.rates_list_recycler)).perform(
-            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(0, ClickOnRecyclerItem())
+            RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(position, ViewActions.click())
         )
 
     }

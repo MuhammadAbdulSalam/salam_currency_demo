@@ -18,18 +18,23 @@ class RateListScreen {
 
     @Before
     fun setup(){
-        Thread.sleep(1000)
+        Thread.sleep(5000) //wait for app load
     }
 
     @Test
     fun clickFetchButton(){
+
         onRateListScreen {
-            addAmount("10")
+            addAmount("20")
             onFetchClick()
-            Thread.sleep(10000)
-            recyclerLongPress(0)
-            recyclerLongPress(1)
+            Thread.sleep(20000) //wait api response
+
+            recyclerItemSelect(0)
+            recyclerItemSelect(1)
+            Thread.sleep(3000) //let ui update after selection
+
             onHistoryClicked()
+            Thread.sleep(10000)
         }
     }
 }

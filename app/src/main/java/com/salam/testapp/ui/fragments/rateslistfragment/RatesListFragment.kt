@@ -34,6 +34,18 @@ class RatesListFragment : Fragment() {
     private val viewModel: RateListViewModel by viewModels()
     private var selectedAmount = ""
 
+    private var currencyRatesList = listOf(
+        CurrencyRates(AppCurrency.GBP, "110.0"),
+        CurrencyRates(AppCurrency.AUD, "20.2"),
+        CurrencyRates(AppCurrency.JPY, "231.0"),
+        CurrencyRates(AppCurrency.USD, "100.1"),
+        CurrencyRates(AppCurrency.NZD, "82.5"),
+        CurrencyRates(AppCurrency.CAD, "10.2"),
+        CurrencyRates(AppCurrency.CHF, "50.1"),
+        CurrencyRates(AppCurrency.CNY, "40.1"),
+        CurrencyRates(AppCurrency.SEK, "21.3"),
+    )
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentRatesListBinding.inflate(inflater, container, false)
         return binding.root
@@ -46,7 +58,8 @@ class RatesListFragment : Fragment() {
 
         binding.layoutCurrencySelect.btnFetch.setOnClickListener{
             selectedAmount = binding.layoutCurrencySelect.tvAmount.text.toString()
-            viewModel.getCurrencyList(selectedAmount)
+           // viewModel.getCurrencyList(selectedAmount) //use api response after testing
+            rateListAdapter.setListItems(currencyRatesList)
         }
     }
 

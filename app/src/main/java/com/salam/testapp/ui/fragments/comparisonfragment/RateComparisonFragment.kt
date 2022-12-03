@@ -46,7 +46,7 @@ class RateComparisonFragment: Fragment() {
 
         initObservers()
 
-       comparisonCurrencyOne = args.comparisonFragArgsModel.exchangeRateCurrencyOne
+        comparisonCurrencyOne = args.comparisonFragArgsModel.exchangeRateCurrencyOne
         comparisonCurrencyTwo = args.comparisonFragArgsModel.exchangeRateCurrencyTow
 
         val currencySymbol = Currency.getInstance(AppCurrency.EUR.name).symbol
@@ -54,8 +54,14 @@ class RateComparisonFragment: Fragment() {
         binding.layoutBaseCurrency.tvCurrencyName.text = AppCurrency.EUR.name
         binding.layoutBaseCurrency.tvCurrencyValue.text = "$currencySymbol ${args.comparisonFragArgsModel.amount}"
 
-        val request = TimeSeriesRequest(HelperUtility.getDate(), HelperUtility.getPreviousDate(), "$comparisonCurrencyOne,$comparisonCurrencyTwo")
-        viewModel.getCurrencyTimeSeries(request)
+        if(HelperUtility.dummyTesting){
+            val tableRows = mapTimeSeriesResponseToTableRows(HelperUtility.getDummyComparisonList())
+            createHistoryTable(tableRows)
+        }
+        else{
+            val request = TimeSeriesRequest(HelperUtility.getDate(), HelperUtility.getPreviousDate(), "$comparisonCurrencyOne,$comparisonCurrencyTwo")
+            viewModel.getCurrencyTimeSeries(request)
+        }
     }
 
     private fun initObservers(){

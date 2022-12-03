@@ -1,28 +1,22 @@
 package com.salam.testapp.ui.fragments.rateslistfragment
 
-import android.R
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.salam.testapp.databinding.FragmentRatesListBinding
-import com.salam.testapp.ui.fragments.rateslistfragment.adapters.RatesListAdapter
-import com.salam.testapp.ui.fragments.rateslistfragment.viewmodel.RateListViewModel
-import com.salam.testapp.utils.AppCurrency
-import dagger.hilt.android.AndroidEntryPoint
-import android.util.Log
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.selection.SelectionTracker
 import androidx.recyclerview.selection.StorageStrategy
-import com.salam.testapp.api.data.CurrencyRates
+import com.salam.testapp.databinding.FragmentRatesListBinding
 import com.salam.testapp.ui.fragments.rateslistfragment.adapters.ItemsDetailsLookup
 import com.salam.testapp.ui.fragments.rateslistfragment.adapters.ItemsKeyProvider
+import com.salam.testapp.ui.fragments.rateslistfragment.adapters.RatesListAdapter
+import com.salam.testapp.ui.fragments.rateslistfragment.viewmodel.RateListViewModel
+import com.salam.testapp.ui.helper.HelperUtility
 import com.salam.testapp.ui.helper.fragnavdatamodels.ComparisonFragArgsModel
-import org.json.JSONObject
+import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
@@ -34,17 +28,7 @@ class RatesListFragment : Fragment() {
     private val viewModel: RateListViewModel by viewModels()
     private var selectedAmount = ""
 
-    private var currencyRatesList = listOf(
-        CurrencyRates(AppCurrency.GBP, "110.0"),
-        CurrencyRates(AppCurrency.AUD, "20.2"),
-        CurrencyRates(AppCurrency.JPY, "231.0"),
-        CurrencyRates(AppCurrency.USD, "100.1"),
-        CurrencyRates(AppCurrency.NZD, "82.5"),
-        CurrencyRates(AppCurrency.CAD, "10.2"),
-        CurrencyRates(AppCurrency.CHF, "50.1"),
-        CurrencyRates(AppCurrency.CNY, "40.1"),
-        CurrencyRates(AppCurrency.SEK, "21.3"),
-    )
+    private var currencyRatesList = HelperUtility.getDummyCurrencyList()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentRatesListBinding.inflate(inflater, container, false)
@@ -58,8 +42,10 @@ class RatesListFragment : Fragment() {
 
         binding.layoutCurrencySelect.btnFetch.setOnClickListener{
             selectedAmount = binding.layoutCurrencySelect.tvAmount.text.toString()
-           // viewModel.getCurrencyList(selectedAmount) //use api response after testing
-            rateListAdapter.setListItems(currencyRatesList)
+            if(HelperUtility.dummyTesting)
+                rateListAdapter.setListItems(currencyRatesList)
+            else
+              viewModel.getCurrencyList(selectedAmount) //use api response after testing
         }
     }
 

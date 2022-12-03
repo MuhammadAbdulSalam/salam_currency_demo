@@ -1,10 +1,6 @@
-# freeagent_test
+# salam_test
 
-- On Rate conversion Fragment 1 -> Use Recursive convert endpoint to show design pattern abilities with API Calls
-- On timeseries -> Historic data -> do in app conversion to avoid making 10 calls again. 
-- Note-> Improvements to do -> better error handling, more unit tests, more ui tests,
-- App works as expected
-- API key is stored in app for testing. 
+Simple currency conversion app
 
 <img src="https://user-images.githubusercontent.com/39949965/195470422-8ea3843a-ccf9-4dc0-be55-03b3a7690725.png" alt="drawing" style="width:200px;"/>
 <img src="https://user-images.githubusercontent.com/39949965/195470424-b58d8eb9-6e8d-459f-9c8b-170dc8d59932.png" alt="drawing" style="width:200px;"/>

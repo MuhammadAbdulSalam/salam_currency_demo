@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FreeAgent Programming Test</string>
+    <string name="app_name">Salam Currency Test</string>
     <string name="amount">Amount</string>
     <string name="fetch">fetch</string>
     <string name="base_currency">Default Currency</string>

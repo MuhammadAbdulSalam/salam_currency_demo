@@ -12,7 +12,7 @@ android {
         dataBinding true
     }
     defaultConfig {
-        applicationId "com.freeagent.testapp"
+        applicationId "com.salam.testapp"
         minSdk 21
         targetSdk 30
         versionCode 1

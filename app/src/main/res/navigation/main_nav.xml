@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/fragment_rate_list"
-        android:name="com.freeagent.testapp.ui.fragments.rateslistfragment.RatesListFragment"
+        android:name="com.salam.testapp.ui.fragments.rateslistfragment.RatesListFragment"
         tools:layout="@layout/fragment_rates_list">
         <action
             android:id="@+id/action_fragment_home_screen_to_fragment_comparison"
@@ -20,11 +20,11 @@
 
     <fragment
         android:id="@+id/fragment_rate_comparison"
-        android:name="com.freeagent.testapp.ui.fragments.comparisonfragment.RateComparisonFragment"
+        android:name="com.salam.testapp.ui.fragments.comparisonfragment.RateComparisonFragment"
         tools:layout="@layout/fragment_rate_comparison">
         <argument
             android:name="comparisonFragArgsModel"
-            app:argType="com.freeagent.testapp.ui.helper.fragnavdatamodels.ComparisonFragArgsModel">
+            app:argType="com.salam.testapp.ui.helper.fragnavdatamodels.ComparisonFragArgsModel">
         </argument>
     </fragment>
 

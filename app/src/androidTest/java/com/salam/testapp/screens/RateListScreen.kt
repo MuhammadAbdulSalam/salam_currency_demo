@@ -7,7 +7,7 @@ import org.junit.Test
 class RateListScreen: BaseTestRules() {
 
     @Test
-    fun test_A_ClickFetchButton(){
+    fun test_A_ItemSelection(){
 
         onRateListScreen {
             addAmount("20")

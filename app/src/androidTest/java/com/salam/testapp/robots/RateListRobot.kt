@@ -8,8 +8,8 @@ fun onRateListScreen(func: RateListRobot.() -> Unit) = RateListRobot().apply { f
 
 class RateListRobot: BaseRobot() {
 
-    fun onFetchClick(){
-        clickButton(R.id.btn_fetch, "fetch")
+    fun onFetchButton(performClick: Boolean = true){
+        clickButton(R.id.btn_fetch, "fetch", performClick)
     }
 
     fun addAmount(amount: String){
@@ -20,8 +20,8 @@ class RateListRobot: BaseRobot() {
         longPress(position)
     }
 
-    fun onHistoryClicked(){
-        clickButton(R.id.btn_history, "History")
+    fun onHistoryButton(performClick: Boolean = true){
+        clickButton(R.id.btn_history, "History", performClick)
     }
 
 }
